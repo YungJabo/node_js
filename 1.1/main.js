@@ -16,24 +16,20 @@ const createFolder = async (src) => {
 };
 
 const moveFilesUp = async (base) => {
-  try {
-    const folders = await fs.readdir(base);
+  const folders = await fs.readdir(base);
 
-    folders.forEach(async (item) => {
-      const localBase = path.join(base, item);
-      const state = await fs.stat(localBase);
+  for (const item of folders) {
+    const localBase = path.join(base, item);
+    const state = await fs.stat(localBase);
 
-      if (state.isFile()) {
-        const basename = path.basename(localBase);
-        const firstSymb = basename[0].toUpperCase();
-        await createFolder(path.join(dist, firstSymb));
-        await fs.link(localBase, path.join(dist, firstSymb, basename));
-      } else {
-        await moveFilesUp(localBase);
-      }
-    });
-  } catch (err) {
-    console.error(err);
+    if (state.isFile()) {
+      const basename = path.basename(localBase);
+      const firstSymb = basename[0].toUpperCase();
+      await createFolder(path.join(dist, firstSymb));
+      await fs.link(localBase, path.join(dist, firstSymb, basename));
+    } else {
+      await moveFilesUp(localBase);
+    }
   }
 };
 

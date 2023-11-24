@@ -1,8 +1,9 @@
 const http = require("http");
+require("dotenv").config();
 
-const PORT = 5000;
-const intervalTime = 2000;
-const serverStop = 9500;
+const PORT = process.env.PORT;
+const intervalTime = process.env.intervalTime;
+const serverStop = process.env.serverStop;
 const server = http.createServer((req, res) => {
   if (req.method === "GET") {
     const dateInterval = setInterval(() => {
@@ -11,7 +12,8 @@ const server = http.createServer((req, res) => {
     setTimeout(() => {
       clearInterval(dateInterval);
       const lastTime = new Date().toUTCString();
-      console.log(`Сервер был остановлен в: ${lastTime}`);
+      res.writeHead(200, { "Content-Type": "text/plain", charset: "utf-8" });
+      res.end(`${lastTime}`);
     }, serverStop);
   }
 });
