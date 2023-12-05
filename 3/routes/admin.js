@@ -3,6 +3,7 @@ const router = express.Router()
 const fs = require('fs')
 const path = require('path')
 const formidable = require('formidable')
+const db = require('../model')
 
 router.get('/', (req, res, next) => {
   // TODO: Реализовать, подстановку в поля ввода формы 'Счетчики'
@@ -40,10 +41,11 @@ router.post('/skills', (req, res, next) => {
       text: 'Лет на сцене в качестве скрипача',
     },
   ]
-  data.skills = newData
-  const updatedData = JSON.stringify(data, null, 2)
-  fs.writeFileSync(filePath, updatedData)
-  res.send('Реализовать сохранение нового объекта со значениями блока скиллов')
+  // data.skills = newData
+  // const updatedData = JSON.stringify(data, null, 2)
+  // fs.writeFileSync(filePath, updatedData)
+  db.set('skills', newData).write()
+  // res.send('Реализовать сохранение нового объекта со значениями блока скиллов')
 })
 
 router.post('/upload', (req, res, next) => {
@@ -57,14 +59,7 @@ router.post('/upload', (req, res, next) => {
   const dbPath = path.join(__dirname, '..', 'data.json')
   const dbData = JSON.parse(fs.readFileSync(dbPath))
   const formData = new formidable.IncomingForm()
-  const filesFolder = path.join(
-    __dirname,
-    '..',
-    'public',
-    'assets',
-    'img',
-    'products'
-  )
+  const filesFolder = path.join(__dirname, '..', 'upload')
   formData.parse(req, function (err, fields, files) {
     console.log(files.photo[0], fields)
     if (err) {
@@ -78,13 +73,14 @@ router.post('/upload', (req, res, next) => {
       }
     })
     const newData = {
-      src: './assets/img/products/' + files.photo[0].originalFilename,
+      src: './' + files.photo[0].originalFilename,
       name: fields.name[0],
       price: Number(fields.price[0]),
     }
-    dbData.products.push(newData)
-    const updatedData = JSON.stringify(dbData, null, 2)
-    fs.writeFileSync(dbPath, updatedData)
+    // dbData.products.push(newData)
+    // const updatedData = JSON.stringify(dbData, null, 2)
+    // fs.writeFileSync(dbPath, updatedData)
+    db.get('products').push(newData).write()
   })
 })
 
