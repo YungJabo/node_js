@@ -25,15 +25,15 @@
 Thumbs.db
 
 # Folders to ignore
-# .CVS
-# .git
-# .hg
-# .idea
-# .svn
-# .vscode
-# bower_components
-# dist
-# build
+.CVS
+.git
+.hg
+.idea
+.svn
+.vscode
+bower_components
+dist
+build
 
 # Node.JS
 node_modules
