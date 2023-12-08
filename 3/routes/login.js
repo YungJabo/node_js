@@ -3,18 +3,14 @@ const router = express.Router()
 const fs = require('fs')
 const path = require('path')
 
-// const isAdmin = (req, res, next) => {
-//   if (req.session.isAdmin) {
-//     return next()
-//   }
-// }
 router.get('/', (req, res, next) => {
-  res.render('pages/login', { title: 'SigIn page' })
+  res.render('pages/login', {
+    title: 'SigIn page',
+    msglogin: req.flash('messageLogin')[0],
+  })
 })
 
 router.post('/', (req, res, next) => {
-  // TODO: Реализовать функцию входа в админ панель по email и паролю
-
   const formData = req.body
   const filePath = path.join(__dirname, '..', 'data.json')
   const data = JSON.parse(fs.readFileSync(filePath))
@@ -24,8 +20,9 @@ router.post('/', (req, res, next) => {
   ) {
     res.render('pages/admin', { title: 'Admin page' })
   } else {
-    res.send('Ошибка! Неверно введены данные!')
+    req.flash('messageLogin', 'Ошибка! Введенные данные не совпадают!')
   }
+  res.redirect('/login')
 })
 
 module.exports = router
