@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
   res.render('pages/login', {
     title: 'SigIn page',
     msglogin: req.flash('messageLogin')[0],
-  })
+  })  
 })
 
 router.post('/', (req, res, next) => {
@@ -18,7 +18,7 @@ router.post('/', (req, res, next) => {
     formData.email === data.admin.email &&
     formData.password === data.admin.password
   ) {
-    res.render('pages/admin', { title: 'Admin page' })
+    res.redirect('/admin')
   } else {
     req.flash('messageLogin', 'Ошибка! Введенные данные не совпадают!')
   }
