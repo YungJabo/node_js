@@ -2,27 +2,29 @@
   "skills": [
     {
       "type": "age",
-      "number": "90",
+      "number": "66",
       "text": "Возраст начала занятий на скрипке"
     },
     {
       "type": "concerts",
-      "number": "80",
+      "number": "77",
       "text": "Концертов отыграл"
     },
     {
       "type": "cities",
-      "number": "70",
+      "number": "88",
       "text": "Максимальное число городов в туре"
     },
     {
       "type": "years",
-      "number": "55",
+      "number": "99",
       "text": "Лет на сцене в качестве скрипача"
     }
   ],
   "products": [],
-  "messages": [{}],
+  "messages": [
+    {}
+  ],
   "admin": {
     "email": "admin@yandex.ru",
     "password": "admin10"
