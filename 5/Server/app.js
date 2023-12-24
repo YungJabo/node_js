@@ -6,12 +6,16 @@ import logger from "morgan";
 import router from "./router/index.js";
 import { mongooseConnect } from "./model/connections.js";
 import { config } from "dotenv";
+import { createServer } from "http";
+import { socketServer } from "./socket.js";
 
 config();
 const __filename = fileURLToPath(import.meta.url);
 global.__dirname = path.dirname(__filename);
 
 const app = express();
+const server = createServer(app);
+socketServer.init(server);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -41,7 +45,7 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-app.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log("Server is run");
   mongooseConnect(process.env.DB_URL);
 });
