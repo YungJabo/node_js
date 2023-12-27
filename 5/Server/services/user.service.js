@@ -9,6 +9,18 @@ class UserService {
     }
     return userDto(user);
   }
+  async getUsers() {
+    const users = await userRepository.getUsers();
+    return users;
+  }
+  async updatePermission(data, userId) {
+    const users = await userRepository.updatePermission(data, userId);
+    return users;
+  }
+  async delUser(userId) {
+    const users = await userRepository.delUser(userId);
+    return users;
+  }
 }
 
 export const userService = new UserService();
