@@ -26,20 +26,8 @@ class AuthService {
     return userDto(user);
   }
   async updateProfile(newData, userId) {
-    let isValid = true;
-    const user = await userRepository.getUserById(userId);
-    for (const [key, value] of Object.entries(newData)) {
-      if (!validationData(value)) {
-        isValid = false;
-      }
-    }
-    if (!user.comparePassword(newData.oldPassword)) {
-      throw new Error("Неправильный пароль");
-    }
-    if (isValid) {
-      const updUser = await userRepository.update(userId, newData);
-      return userDto(updUser);
-    }
+    const updUser = await userRepository.update(userId, newData);
+    return updUser;
   }
 }
 

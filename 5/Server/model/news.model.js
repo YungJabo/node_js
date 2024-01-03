@@ -23,7 +23,7 @@ class NewsRepository {
     const newsModel = await NewsModel.findById(id);
     newsModel.text = data.text;
     newsModel.title = data.title;
-    const updateNews = newsModel.save();
+    await newsModel.save();
     const allNews = await this.showNews();
     return allNews;
   }

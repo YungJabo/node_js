@@ -17,7 +17,7 @@ export const userDto = ({
     password,
     image: image
       ? image
-      : "https://icons-for-free.com/iconfiles/png/512/profile +user+icon-1320166082804563970.png",
+      : "https://icons-for-free.com/iconfiles/png/512/profile+user+icon-1320166082804563970.png",
     permission: permission
       ? permission
       : {

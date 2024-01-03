@@ -19,13 +19,29 @@ class UserRepository {
   }
   async update(userId, data) {
     const userModel = await UserModel.findById(userId);
-    userModel.firstName = data.firstName;
-    userModel.middleName = data.middleName;
-    userModel.surName = data.surName;
-    userModel.image = data.avatar
-      ? data.avatar
-      : "https://icons-for-free.com/iconfiles/png/512/profile +user+icon-1320166082804563970.png";
-    userModel.setPassword(data.newPassword);
+    console.log(data);
+    if (data.firstName !== "") {
+      userModel.firstName = data.firstName;
+    }
+    if (data.middleName !== "") {
+      userModel.middleName = data.middleName;
+    }
+    if (data.surName !== "") {
+      userModel.surName = data.surName;
+    }
+
+    userModel.image =
+      data.avatar === "null"
+        ? "https://icons-for-free.com/iconfiles/png/512/profile+user+icon-1320166082804563970.png"
+        : data.avatar;
+    if (data.newPassword !== "") {
+      if (!userModel.comparePassword(data.oldPassword)) {
+        throw new Error("Неправильный пароль");
+      } else {
+        userModel.setPassword(data.newPassword);
+      }
+    }
+
     const updUser = await userModel.save();
     return updUser;
   }
